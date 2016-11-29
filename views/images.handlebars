@@ -1,0 +1,84 @@
+
+
+<div class="container">
+		<!-- HEADER AND TODO COUNT -->
+		<div class="jumbotron text-center">
+			<h1>I have  <span class="label label-info">{{ images.length }}</span> images</h1>
+		</div>
+
+		<!-- TODO LIST -->
+		<div id="list" class="row">	
+			<div class="col-sm-4 col-sm-offset-4">
+				
+    			{{#each images}}
+    
+        		<div id"image + {{title}}" style="display:block; margin-bottom:40px; max-width: 300px; max-height: 400px; overflow:hidden;">
+        			<h3>{{ title }}</h3> 
+						<button type="button"  id="delete{{hash}}" class="btn btn-xs btn-default" style="">X</button> 
+        			
+           			<div style="overflow: hidden; max-width: inherit; max-height: inherit;">
+           				<img src="{{url}}" alt="" style="max-height:100%; max-width:100%;">
+           			</div>
+        		</div>
+        				
+           			
+           	
+					<script>
+						$(document).ready(function(){
+							
+							$('#delete{{hash}}').on('click', function (evt) {
+							evt.preventDefault();
+                			$.ajax('/data/' + "{{ hash}}", {
+                				type: 'DELETE',
+                    			success: function(data){
+                       			console.log('succes');
+                       			location.reload();
+                    				}
+                				});
+
+							});
+						});
+					</script>
+    			{{/each}}
+
+				
+    		</div>
+    	</div>	
+</div>    			
+    		
+    	
+
+		
+
+		
+<div id="formDiv" class="row">
+	<div class="col-sm-8 col-sm-offset-2 text-center">
+		<form id="form" role="form" action="/data/image/{year}/{month}" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+
+				<input type="text" id="titleInput" class="form-control input-lg text-center" placeholder="image title" name = "title">
+				<input type="file" id="urlInput" class="form-control input-lg text-center" placeholder="file upload" name = "image" required accept="image/*">
+				<button style="margin-top:10px;" type="submit" class="btn btn-primary btn-lg">Add</button>
+			</div>			
+		</form>
+	</div>
+</div>	
+
+<script>
+
+
+	$(document).ready(function () {
+		$('#form').submit(function (data) {
+			console.log('what the fukc');
+			window.location.replace("http://localhost:3000/");
+		});
+		
+	});
+</script>
+
+
+
+
+
+
+ 			
