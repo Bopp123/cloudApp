@@ -53,12 +53,12 @@
 		
 <div id="formDiv" class="row">
 	<div class="col-sm-8 col-sm-offset-2 text-center">
-		<form id="form" role="form" action="/data/image/{year}/{month}" method="POST" enctype="multipart/form-data">
+		<form id="form" role="form" action="/data/image" method="POST" enctype="multipart/form-data">
 			<div class="form-group">
 
 				<input type="text" id="titleInput" class="form-control input-lg text-center" placeholder="image title" name = "title">
 				<input type="file" id="urlInput" class="form-control input-lg text-center" placeholder="file upload" name = "image" required accept="image/*">
-				<button style="margin-top:10px;" type="submit" class="btn btn-primary btn-lg">Add</button>
+				<button type="submit" class="btn btn-primary btn-lg">Add</button>
 			</div>			
 		</form>
 	</div>
@@ -68,11 +68,13 @@
 
 
 	$(document).ready(function () {
-		$('#form').submit(function (data) {
-			console.log('what the fukc');
-			window.location.replace("http://localhost:3000/");
-		});
-		
+	
+		$("#form").bind('ajax:complete', function() {
+
+        window.location.replace("http://localhost:3000/");
+
+
+   });
 	});
 </script>
 

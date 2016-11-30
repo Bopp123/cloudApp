@@ -20,14 +20,15 @@ var hashCode = function(s){
 }
 
 
-var addImage = (title, url) =>{
+var addImage = (title, url,awskey) =>{
 	var images = getImages();
 	var urlHash = hashCode(title+url);
 	debugger;
 	var image = {
 		title,
 		url,
-		hash: urlHash
+		hash: urlHash,
+		awskey
 	};
 
 	images.push(image);
@@ -39,7 +40,7 @@ var removeImage = (hash) =>{
 	var images = getImages();
 	var imageToDelete = images.filter((image) => image.hash == hash);
 	console.log(imageToDelete);
-	fs.unlinkSync(__dirname + "/uploads/" + imageToDelete[0].url);
+	// fs.unlinkSync(__dirname + "/uploads/" + imageToDelete[0].url);
 	var remainingImages = images.filter((image)=> {
 		
 		return image.hash != hash;
@@ -47,9 +48,11 @@ var removeImage = (hash) =>{
 
 	saveImages(remainingImages);
 	if (remainingImages.length < images.length) {console.log(`image has been succesfully deleted `);
-		return remainingImages;
+		return {remainingImages, imageToDelete};
 		};
 };
+
+
 
 var clearImages = () => saveImages();
 

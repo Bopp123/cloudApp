@@ -37,47 +37,64 @@ app.get('/', (req, res) => {
 });
 var formidable = require('formidable');
 
-app.get('/data/image', function (req,res) {
-	var now = new Date();
-	res.render('data/image', {
-		year: now.getFullYear(),
-		month: now.getMonth()
-	});
-});
+// app.get('/data/image', function (req,res) {
+// 	var now = new Date();
+// 	res.render('data/image', {
+// 		year: now.getFullYear(),
+// 		month: now.getMonth()
+// 	});
+// });
 
-app.post('/data/image/:year/:month', (req, res) => {
+var aws = require('./aws.js');
+app.post('/data/image', (req, res) => {
 	var form = new formidable.IncomingForm();
-	form.parse(req, function (err,fields,files) {
-		console.log(fields.title, '    : fields');
-		console.log('files: ',files.image.name);
-		images.addImage(fields.title,files.image.name);
+	form.parse( req,function (err,fields,files) {
+		var title = fields.title;
+		var tempPath = files.image.path;
+		console.log(title,tempPath);
+		aws.uploadS3('cloudappdemo', tempPath,title, function () {
+        	 console.log('file is in the cloud');
+        	 res.sendFile(__dirname + "/redirect.html");
+        	 var new_location = __dirname + '/uploads/';
 
-	});
-	form.on('end', function(fields, files) {
-        /* Temporary location of our uploaded file */
-        var temp_path = this.openedFiles[0].path;
-        /* The file name of the uploaded file */
-        var file_name = this.openedFiles[0].name;
-        /* Location where we want to copy the uploaded file */
-        var new_location = __dirname + '/uploads/';
-
- 
-        fs.copy(temp_path, new_location + file_name, function(err) {  
+        	 fs.copy(tempPath, new_location + files.image.name, function(err) {  
             if (err) {
                 console.error(err);
             } else {
                 console.log("success!")
-                res.redirect(200, "http://localhost:3000/");
+               
+                
             }
+        	});
         });
+		
+	});
+	
+	// form.on('end', function(fields, files, title, res) {
+		
+ //        /* Temporary location of our uploaded file */
+ //        var temp_path = this.openedFiles[0].path;
+ //        console.log(temp_path);
+ //        /* The file name of the uploaded file */
+ //        var file_name = this.openedFiles[0].name;
+ //        /* Location where we want to copy the uploaded file */
+ //        
+        
+
+ //        // aws.uploadS3('cloudappdemo', temp_path);
+
+ 
+
 	});
 
 	
-});
+
+
 
 app.delete('/data/:image_hash', (req, res) => {
-	console.log(req.params.image_hash);
 	var img = images.removeImage(req.params.image_hash);
+	console.log(img.imageToDelete[0].awskey);
+	aws.deleteFileS3("cloudappdemo",img.imageToDelete[0].awskey);
 	res.render('images',{images: img});
 	});
 
