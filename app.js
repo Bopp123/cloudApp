@@ -5,6 +5,7 @@ app.set('port', process.env.PORT || 3000);
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const fs = require('fs-extra');
+const formidable = require('formidable');
 
 
 app.use(morgan('dev')); 
@@ -35,15 +36,8 @@ const images = require('./images.js');
 app.get('/', (req, res) => {
 	res.render('images',{images: images.getImages()});
 });
-var formidable = require('formidable');
 
-// app.get('/data/image', function (req,res) {
-// 	var now = new Date();
-// 	res.render('data/image', {
-// 		year: now.getFullYear(),
-// 		month: now.getMonth()
-// 	});
-// });
+
 
 var aws = require('./aws.js');
 app.post('/data/image', (req, res) => {
@@ -69,20 +63,6 @@ app.post('/data/image', (req, res) => {
         });
 		
 	});
-	
-	// form.on('end', function(fields, files, title, res) {
-		
- //        /* Temporary location of our uploaded file */
- //        var temp_path = this.openedFiles[0].path;
- //        console.log(temp_path);
- //        /* The file name of the uploaded file */
- //        var file_name = this.openedFiles[0].name;
- //        /* Location where we want to copy the uploaded file */
- //        
-        
-
- //        // aws.uploadS3('cloudappdemo', temp_path);
-
  
 
 	});
@@ -105,5 +85,5 @@ app.use(express.static(__dirname + "/uploads"));
 
 //make our app listen to given port
 app.listen(app.get('port'), () => {
-	console.log(`app started on http://localhost:${app.get("port")}; press cmd + c to terminate`)
+	console.log(`app started on http://localhost:${app.get("port")}; press ctrl + c to terminate`)
 });
