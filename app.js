@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 
 
 var aws = require('./aws.js');
-app.post('/data/image', (req, res) => {
+app.post('/cloud/data/image', (req, res) => {
 	var form = new formidable.IncomingForm();
 	form.parse( req,function (err,fields,files) {
 		var title = fields.title;
@@ -71,7 +71,7 @@ app.post('/data/image', (req, res) => {
 
 
 
-app.delete('/data/:image_hash', (req, res) => {
+app.delete('/cloud/data/:image_hash', (req, res) => {
 	var img = images.removeImage(req.params.image_hash);
 	console.log(img.imageToDelete[0].awskey);
 	aws.deleteFileS3("cloudappdemo",img.imageToDelete[0].awskey);
