@@ -48,7 +48,7 @@ app.post('/data/image', (req, res) => {
 		console.log(title,tempPath);
 		aws.uploadS3('cloudappdemo', tempPath,title, function () {
         	 console.log('file is in the cloud');
-        	 res.sendFile(__dirname + "/redirect.html");
+        	 res.sendFile(__dirname + "/views/redirect.html");
         	 var new_location = __dirname + '/uploads/';
 
         	 fs.copy(tempPath, new_location + files.image.name, function(err) {  

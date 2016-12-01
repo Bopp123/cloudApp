@@ -58,7 +58,7 @@
 
 				<input type="text" id="titleInput" class="form-control input-lg text-center" placeholder="image title" name = "title">
 				<input type="file" id="urlInput" class="form-control input-lg text-center" placeholder="file upload" name = "image" required accept="image/*">
-				<button type="submit" class="btn btn-primary btn-lg">Add</button>
+				<button id="btn" type="submit" class="btn btn-primary btn-lg">Add</button>
 			</div>			
 		</form>
 	</div>
@@ -68,13 +68,11 @@
 
 
 	$(document).ready(function () {
-	
-		$("#form").bind('ajax:complete', function() {
+		$('#btn').on('click', function () {
+			$('.container').append('<p class="text-center"><span class="fa fa-spinner fa-spin fa-3x"></span></p>');
+		});
+		
 
-        window.location.replace("http://localhost:3000/");
-
-
-   });
 	});
 </script>
 
