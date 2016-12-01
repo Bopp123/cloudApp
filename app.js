@@ -49,17 +49,17 @@ app.post('/data/image', (req, res) => {
 		aws.uploadS3('cloudappdemo', tempPath,title, function () {
         	 console.log('file is in the cloud');
         	 res.sendFile(__dirname + "/views/redirect.html");
-        	 var new_location = __dirname + '/uploads/';
+        	//  var new_location = __dirname + '/uploads/';
 
-        	 fs.copy(tempPath, new_location + files.image.name, function(err) {  
-            if (err) {
-                console.error(err);
-            } else {
-                console.log("success!")
+        	//  fs.copy(tempPath, new_location + files.image.name, function(err) {  
+         //    if (err) {
+         //        console.error(err);
+         //    } else {
+         //        console.log("success!")
                
                 
-            }
-        	});
+         //    }
+        	// });
         });
 		
 	});
