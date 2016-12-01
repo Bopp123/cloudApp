@@ -32,7 +32,9 @@
                 				type: 'DELETE',
                     			success: function(data){
                        			console.log('succes');
-                       			location.reload();
+                       			setTimeout(() => {
+									location.reload();
+									},1000);
                     				}
                 				});
 
