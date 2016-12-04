@@ -8,11 +8,11 @@
 
 		<!-- TODO LIST -->
 		<div id="list" class="row">	
-			<div class="col-sm-4 col-sm-offset-4">
+			<div class="col-sm-8 col-sm-offset-2">
 				
     			{{#each images}}
     
-        		<div id"image + {{title}}" style="display:block; margin-bottom:40px; max-width: 300px; max-height: 400px; overflow:hidden;">
+        		<div id"image + {{title}}" style="display:block; margin-bottom:40px; max-width: 500px; max-height: 500px; overflow:hidden;">
         			<h3>{{ title }}</h3> 
 						<button type="button"  id="delete{{hash}}" class="btn btn-xs btn-default" style="">X</button> 
         			
@@ -32,9 +32,7 @@
                 				type: 'DELETE',
                     			success: function(data){
                        			console.log('succes');
-                       			setTimeout(() => {
-									location.reload();
-									},1000);
+                       			location.reload();
                     				}
                 				});
 
